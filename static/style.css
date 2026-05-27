@@ -1,0 +1,897 @@
+/* ==========================================================================
+   DESIGN SYSTEM & VARIABLES
+   ========================================================================== */
+   :root {
+    /* Color Palette */
+    --primary: #FC8019;
+    --primary-hover: #E56F0F;
+    --primary-light: #FFF2E6;
+    --text-main: #1C1C24;
+    --text-muted: #686B78;
+    --bg-app: #F8F9FA;
+    --bg-card: #FFFFFF;
+    --border-color: #E9ECEF;
+    --border-focus: #FC8019;
+    
+    /* Shadows & Radii */
+    --shadow-sm: 0 2px 8px rgba(28, 28, 36, 0.04);
+    --shadow-md: 0 4px 20px rgba(28, 28, 36, 0.08);
+    --shadow-lg: 0 12px 32px rgba(28, 28, 36, 0.12);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Global Reset Tweaks */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   UNIVERSAL COMPONENTS (BUTTONS)
+   ========================================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 1.2rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-app);
+    border-color: #D1D5DB;
+}
+
+.btn-action {
+    background-color: var(--primary);
+    color: #ffffff;
+    padding: 0.85rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: var(--radius-md);
+}
+
+.btn-action:hover {
+    background-color: var(--primary-hover);
+    box-shadow: 0 4px 12px rgba(252, 128, 25, 0.2);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.main-header {
+    background-color: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.75rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-logo {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+}
+
+.brand-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.5px;
+}
+
+/* User Profile Context Container */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 6px 14px;
+    border-radius: 100px; /* Pillow capsule shape for a modern SaaS aesthetic */
+    background: #ffffff;
+    border: 1px solid #e4e4e7; /* Clean zinc border */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.user-profile:hover {
+    background: #f4f4f6;
+    border-color: #d4d4d8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Welcome Typography Block */
+.welcome-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: right;
+    user-select: none;
+}
+
+.welcome-text .greeting {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #a1a1aa; /* High contrast muted text state */
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    line-height: 1;
+    margin-bottom: 3px;
+}
+
+.welcome-text .username {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #09090b; /* True deep premium ink black */
+    line-height: 1.2;
+}
+
+/* Modern Animated Identity Avatar */
+.user-avatar-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff5200 0%, #ff7e40 100%); /* Swiggy signature brand palette gradient */
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    box-shadow: 0 2px 6px rgba(255, 82, 0, 0.15);
+    user-select: none;
+}
+
+/* Premium System Badge: Pulsing Session Indicator shifted to Avatar */
+.user-avatar-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    background-color: #10b981; /* Premium Active Emerald Green */
+    border: 2px solid #ffffff; /* Rings the status dot seamlessly away from the gradient background */
+    border-radius: 50%;
+}
+
+/* Logout Button Link Alignment Tuning */
+.logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid #e4e4e7;
+    color: #71717a;
+    transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: #fee2e2; /* Deep modern soft red highlight tint */
+    border-color: #fca5a5;
+    color: #ef4444;
+}
+
+/* Utility to completely hide text inside specialized round button links */
+.logout-text-node {
+    display: none;
+}
+
+/* ==========================================================================
+   MAIN LAYOUT GRID
+   ========================================================================== */
+.app-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 5%;
+    gap: 40px;
+}
+
+@media (min-width: 1024px) {
+    .app-layout {
+        grid-template-columns: 3fr 1.3fr;
+    }
+}
+
+/* ==========================================================================
+   MENU / DISH CATALOG
+   ========================================================================== */
+.section-header {
+    margin-bottom: 24px;
+}
+
+.section-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.5px;
+}
+
+.section-subtitle {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.dish-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.dish-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition-smooth);
+}
+
+.dish-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(252, 128, 25, 0.2);
+}
+
+.dish-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background-color: var(--text-main);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.dish-content {
+    padding: 24px;
+    padding-top: 52px; /* Leaves clean breathing room below absolute badge */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.dish-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    color: var(--text-main);
+}
+
+.dish-meta {
+    margin-bottom: 20px;
+    margin-top: auto;
+}
+
+.dish-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+/* ==========================================================================
+   CHECKOUT SIDEBAR & CART
+   ========================================================================== */
+.checkout-sidebar {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+}
+
+.cart-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.cart-count {
+    font-size: 0.85rem;
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+.cart-body {
+    padding: 0 24px;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.dynamic-cart-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dynamic-cart-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.95rem;
+}
+
+.dynamic-cart-list li:last-child {
+    border-bottom: none;
+}
+
+.empty-cart-placeholder {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 32px 0 !important;
+    font-style: italic;
+}
+
+.cart-footer {
+    padding: 24px;
+    background-color: #FAFBFB;
+    border-top: 1px solid var(--border-color);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.total-row {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.price-highlight {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Forms and Custom Inputs */
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--text-muted);
+}
+
+.input-wrapper input,
+.custom-select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #D1D5DB;
+    border-radius: var(--radius-sm);
+    background-color: #ffffff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    box-sizing: border-box;
+    transition: var(--transition-fast);
+}
+
+.input-wrapper input:focus,
+.custom-select:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(252, 128, 25, 0.15);
+}
+
+.custom-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23686B78' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.sidebar-links {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.link-navigation {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: var(--transition-fast);
+}
+
+.link-navigation:hover {
+    color: var(--primary);
+}
+
+
+
+
+/* ==========================================================================
+   AUTH PAGES (LOGIN / REGISTER / FORGOT PASSWORD)
+   ========================================================================== */
+
+   body.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Upgraded to a clean, modern ambient radial layout instead of a stark linear one */
+    background: radial-gradient(circle at top right, #FFF7F0 0%, #FAFAFA 100%);
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.auth-box {
+    background: var(--bg-card);
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    /* Smooth entrance animation for a premium application feel */
+    animation: authFadeIn 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.auth-box h1 {
+    margin: 0 0 8px 0;
+    color: var(--text-main);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.75px;
+}
+
+/* Added a subtitle selector for professional contextual messaging */
+.auth-box .auth-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    margin-top: 0;
+}
+
+.auth-box .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+.auth-box label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--text-muted);
+}
+
+.auth-box input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #D1D5DB;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-main);
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    transition: var(--transition-fast);
+}
+
+.auth-box input::placeholder {
+    color: #9CA3AF;
+}
+
+.auth-box input:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 4px rgba(252, 128, 25, 0.12);
+    background-color: #FFFFFF;
+}
+
+.auth-box button {
+    width: 100%;
+    background-color: var(--primary);
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: var(--transition-fast);
+}
+
+.auth-box button:hover {
+    background-color: var(--primary-hover);
+    box-shadow: 0 4px 14px rgba(252, 128, 25, 0.25);
+}
+
+.auth-box button:active {
+    transform: scale(0.98);
+}
+
+/* Footer link structures inside the panel */
+.auth-box .auth-footer-links {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+
+.auth-box a {
+    display: inline-block;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition-fast);
+}
+
+.auth-box a:hover {
+    color: var(--primary);
+}
+
+/* Entrance Keyframes */
+@keyframes authFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   ORDERS HISTORY PAGE
+   ========================================================================== */
+
+   .orders-page {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 0 5%;
+    box-sizing: border-box;
+}
+
+/* Page heading enhancement */
+.orders-page h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 24px;
+    color: var(--text-main);
+}
+
+.order-box {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-smooth);
+}
+
+.order-box:hover {
+    box-shadow: var(--shadow-md);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+    margin-bottom: 18px;
+}
+
+.order-header h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.25px;
+}
+
+/* Status Badges with enhanced readability and contrast metrics */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-pending {
+    background: #FFF3E0;
+    color: #E65100;
+}
+
+.status-delivered {
+    background: #E8F5E9;
+    color: #1B5E20;
+}
+
+.status-cancelled {
+    background: #FFEBEE;
+    color: #C62828;
+}
+
+.order-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+@media (min-width: 640px) {
+    .order-details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.order-details p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.order-details strong {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.order-footer {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Helper label to balance layout geometry */
+.order-footer-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.order-total {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT SYSTEM
+   ========================================================================== */
+
+/* Tablet & Smaller Desktop Optimization */
+@media (max-width: 1023px) {
+    .app-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .checkout-sidebar {
+        position: static;
+        width: 100%;
+    }
+    
+    .cart-card {
+        box-shadow: var(--shadow-sm);
+    }
+}
+
+/* Mobile Devices Optimization */
+@media (max-width: 640px) {
+    .header-container {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+        padding: 1rem 5%;
+    }
+
+    .user-profile {
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .welcome-text {
+        text-align: left;
+    }
+
+    .order-header {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .status-badge {
+        align-self: flex-start;
+    }
+
+    .dish-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .auth-box {
+        padding: 32px 24px;
+    }
+}
+
+/* Navigation-Specific Button Override */
+.back-to-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 100px; /* Perfectly matches our premium capsule theme */
+    background: #ffffff;
+    border: 1px solid #e4e4e7;
+    color: #52525b; /* Zinc body text standard */
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.back-to-menu-btn:hover {
+    background: #f4f4f6;
+    border-color: #d4d4d8;
+    color: #ff5200; /* Swiggy orange accent pop on hover */
+}
+
+/* Smooth left shift animation for the inner SVG icon */
+.back-to-menu-btn svg {
+    transition: transform 0.2s ease;
+}
+
+.back-to-menu-btn:hover svg {
+    transform: translateX(-2px);
+}
+
+/* Simple resetting wrapper class to handle general profile boxes when text names are omitted */
+.non-interactive-container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+.analytics-btn {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: white;
+    background-color: #fc8019;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    transition: 0.3s ease;
+    display: inline-block;
+    width: auto
+}
+
+.analytics-btn:hover {
+    background-color: #e56f0f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(252, 128, 25, 0.3);
+}

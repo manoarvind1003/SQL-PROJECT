@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zwiggy Analytics Engine</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/static/zwiggy_logo.png">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='analytics.css') }}">
+
+    <style>
+       
+    </style>
+</head>
+
+<body>
+
+    <header class="dashboard-header">
+        <div class="brand-meta">
+            <div class="brand">
+                <img src="{{ url_for('static', filename='zwiggy_logo.png') }}" alt="Zwiggy Logo" class="brand-logo">
+                <span class="brand-name">Zwiggy</span>
+            </div>
+            
+        </div>
+        <h1 class="analytics-title">Zwiggy Analytics Engine</h1>
+        <a href="/" class="back-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Home
+        </a>
+    </header>
+
+    <div class="workspace-container">
+        <div class="analytics-stream">
+
+            {% for query in queries %}
+            <div class="query-card">
+                <div class="panel-left">
+                    <div class="card-meta-box">
+                        <h2 class="query-title">{{ query.title }}</h2>
+                        <button class="query-btn">Run Metrics</button>
+                    </div>
+
+                    <div class="ide-container">
+                        <div class="ide-header">
+                            <div class="ide-dots">
+                                <div class="ide-dot"></div>
+                                <div class="ide-dot"></div>
+                                <div class="ide-dot"></div>
+                            </div>
+                            <div class="ide-lang">SQL</div>
+                        </div>
+                        <div class="query-box">{{ query.sql | replace("SELECT", "<span class='sql-keyword'>SELECT</span>") | replace("select", "<span class='sql-keyword'>SELECT</span>") | replace("FROM", "<span class='sql-keyword'>FROM</span>") | replace("from", "<span class='sql-keyword'>FROM</span>") | replace("WHERE", "<span class='sql-keyword'>WHERE</span>") | replace("where", "<span class='sql-keyword'>WHERE</span>") | replace("JOIN", "<span class='sql-keyword'>JOIN</span>") | replace("join", "<span class='sql-keyword'>JOIN</span>") | replace("LEFT JOIN", "<span class='sql-keyword'>LEFT JOIN</span>") | replace("ON", "<span class='sql-keyword'>ON</span>") | replace("on", "<span class='sql-keyword'>ON</span>") | replace("GROUP BY", "<span class='sql-keyword'>GROUP BY</span>") | replace("group by", "<span class='sql-keyword'>GROUP BY</span>") | replace("ORDER BY", "<span class='sql-keyword'>ORDER BY</span>") | replace("order by", "<span class='sql-keyword'>ORDER BY</span>") | replace("COUNT", "<span class='sql-function'>COUNT</span>") | replace("count", "<span class='sql-function'>COUNT</span>") | replace("SUM", "<span class='sql-function'>SUM</span>") | replace("sum", "<span class='sql-function'>SUM</span>") | replace("AVG", "<span class='sql-function'>AVG</span>") | replace("avg", "<span class='sql-function'>AVG</span>") | safe }}</div>
+                    </div>
+                </div>
+
+                <div class="panel-right">
+                    <div class="table-container-title">Query Output Dataset</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    {% for column in query.columns %}
+                                    <th>{{ column }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in query.results %}
+                                <tr>
+                                    {% for value in row %}
+                                    <td>{{ value }}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="query-card">
+                <div class="panel-left">
+                    <div class="card-meta-box">
+                        <h2 class="query-title">Custom SQL Workspace</h2>
+                        <button class="query-btn" onclick="runCustomQuery()">Execute Query</button>
+                    </div>
+
+                    <div class="ide-container">
+                        <div class="ide-header">
+                            <div class="ide-dots">
+                                <div class="ide-dot"></div>
+                                <div class="ide-dot"></div>
+                                <div class="ide-dot"></div>
+                            </div>
+                            <div class="ide-lang">MYSQL Sandbox</div>
+                        </div>
+                        
+                        <div class="editor-viewport">
+                            <div class="editor-gutter-lines" id="gutter-lines"><span>1</span></div>
+                            <div class="editor-workspace-wrapper">
+                                <div id="highlight-overlay" class="editor-highlight-overlay" aria-hidden="true"></div>
+                                <textarea id="custom-query" class="custom-query-input" placeholder="Write your SQL query here..." spellcheck="false" oninput="handleEditorInput()" onscroll="handleEditorScroll()"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-right">
+                    <div class="table-container-title">Live Query Results</div>
+                    <div id="custom-results" class="table-responsive">
+                        <div class="empty-state">Execute a query to view results</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const editor = document.getElementById('custom-query');
+        const overlay = document.getElementById('highlight-overlay');
+        const gutter = document.getElementById('gutter-lines');
+
+        const KEYWORDS = /\b(SELECT|FROM|WHERE|JOIN|LEFT|RIGHT|INNER|ON|GROUP\s+BY|ORDER\s+BY|LIMIT|HAVING|AS|AND|OR|IN|INSERT|UPDATE|DELETE|CREATE|TABLE)\b/gi;
+        const FUNCTIONS = /\b(COUNT|SUM|AVG|MIN|MAX|COALESCE|CONCAT|NOW|DATE|ROUND)\b/gi;
+        const STRINGS = /(区分)('(?:''|[^'])*'|"(?:""|[^"])*")/g; 
+        const COMMENTS = /(--.*)/g;
+
+        function highlightSyntax(text) {
+            let html = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            html = html.replace(KEYWORDS, '<span class="token-keyword">$1</span>');
+            html = html.replace(FUNCTIONS, '<span class="token-function">$1</span>');
+            html = html.replace(STRINGS, '<span class="token-string">$2</span>');
+            html = html.replace(COMMENTS, '<span class="token-comment">$1</span>');
+            return html;
+        }
+
+        function updateGutterLines(text) {
+            const lineCount = text.split('\n').length;
+            let gutterHTML = '';
+            for (let i = 1; i <= lineCount; i++) { gutterHTML += `<span>${i}</span>`; }
+            gutter.innerHTML = gutterHTML;
+        }
+
+        function handleEditorInput() {
+            const textValue = editor.value;
+            overlay.innerHTML = highlightSyntax(textValue);
+            updateGutterLines(textValue);
+        }
+
+        function handleEditorScroll() {
+            overlay.scrollTop = editor.scrollTop;
+            overlay.scrollLeft = editor.scrollLeft;
+            gutter.scrollTop = editor.scrollTop;
+        }
+
+        async function runCustomQuery() {
+            const query = editor.value;
+
+            if (!query.trim()) {
+                alert("Please enter SQL query");
+                return;
+            }
+
+            const resultBox = document.getElementById("custom-results");
+            resultBox.removeAttribute('class'); // Temporarily release constraints for structural text states
+
+            const response = await fetch("/run_custom_query", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query: query })
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                resultBox.innerHTML = `<div class="empty-state">${data.error}</div>`;
+                return;
+            }
+
+            // Restore output container layouts for tabular data tracking maps
+            resultBox.setAttribute('class', 'table-responsive');
+
+            let tableHTML = "<table><thead><tr>";
+            data.columns.forEach(column => { tableHTML += `<th>${column}</th>`; });
+            tableHTML += "</tr></thead><tbody>";
+
+            data.results.forEach(row => {
+                tableHTML += "<tr>";
+                row.forEach(value => { tableHTML += `<td>${value}</td>`; });
+                tableHTML += "</tr>";
+            });
+
+            tableHTML += "</tbody></table>";
+            resultBox.innerHTML = tableHTML;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => { handleEditorInput(); });
+    </script>
+</body>
+
+</html>

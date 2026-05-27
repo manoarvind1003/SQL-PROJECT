@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zwiggy Analytics Dashboard</title>
+
+    <!-- Iconography System -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Typography System -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/static/zwiggy_logo.png">
+    
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='analytics.css') }}">
+
+    <!-- Data Visualization Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+
+    <div class="dashboard-container">
+
+        <!-- ==========================================================================
+           SIDEBAR SYSTEM
+           ========================================================================== -->
+        <aside class="sidebar" aria-label="Main Navigation">
+            <div class="sidebar-top">
+                <div class="logo-box">
+                    <div class="brand">
+                <img src="{{ url_for('static', filename='zwiggy_logo.png') }}" alt="Zwiggy Logo" class="brand-logo">
+                <span class="brand-name">Zwiggy</span>
+            </div>
+                </div>
+
+                <!-- Functional Minimalist Search Wrap -->
+                <div class="search-bar-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+                    <input type="text" placeholder="Search analytics..." aria-label="Search dashboard metrics"
+                        style="background: none; border: none; outline: none; width: 100%; color: var(--text-main); font-family: var(--font-stack); font-size: 0.85rem; font-weight: 500;">
+                </div>
+
+                <div class="delivery-mascot">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
+                        alt="Zwiggy Delivery Mascot Illustration">
+                </div>
+
+                <div class="food-gallery">
+                    <div class="food-thumb">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c"
+                            alt="Healthy Salad Bowl with fresh greens">
+                    </div>
+                    <div class="food-thumb">
+                        <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d"
+                            alt="Gourmet Biryani Platter served warm">
+                    </div>
+                    <div class="food-thumb">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
+                            alt="Classic Cheeseburger on toasted bun">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contextual Application Navigation Dock -->
+            <nav class="sidebar-footer-nav" aria-label="Dashboard sections">
+                <button class="nav-btn active" title="Home Summary" aria-current="page">
+                    <i class="fa-solid fa-house nav-icon" aria-hidden="true"></i>
+                </button>
+                <button class="nav-btn" title="Financial Analytics">
+                    <i class="fa-solid fa-chart-pie nav-icon" aria-hidden="true"></i>
+                </button>
+                <button class="nav-btn" title="Account Management">
+                    <i class="fa-solid fa-user nav-icon" aria-hidden="true"></i>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- ==========================================================================
+           MAIN ANALYTICS INTERFACE
+           ========================================================================== -->
+        <main class="main-content">
+
+            <!-- Core Page Controls -->
+            <!-- Core Page Controls -->
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <!-- Professional Back Navigation Button -->
+                    <h1 class="page-title">Dashboard</h1>
+                </div>
+
+                <div class="filter-controls" role="group" aria-label="Filter Metrics by Payment Status">
+                    <button class="filter-btn active">Paid</button>
+                    <button class="filter-btn">Pending</button>
+                </div>
+
+                <a href="/" class="back-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Home
+        </a>
+            </header>
+
+            <!-- Metric Summary Matrix -->
+            <section class="metrics-grid" aria-label="Key Performance Indicators">
+                <div class="metric-card">
+                    <p class="metric-label">Total Users</p>
+                    <h2 class="metric-value">11</h2>
+                </div>
+
+                <div class="metric-card">
+                    <p class="metric-label">Total Items Sold</p>
+                    <h2 class="metric-value">19</h2>
+                </div>
+
+                <div class="metric-card">
+                    <p class="metric-label">Total Orders</p>
+                    <h2 class="metric-value">10</h2>
+                </div>
+
+                <div class="metric-card highlight">
+                    <p class="metric-label">Total Revenue</p>
+                    <h2 class="metric-value"><span
+                            style="font-size: 1.1rem; font-weight: 600; margin-right: 2px;">₹</span>3,570</h2>
+                </div>
+            </section>
+
+            <!-- Dynamic Analytics Framework Grid -->
+            <div class="analytics-layout-grid">
+
+                <!-- Primary Analytical Workspace -->
+                <section class="layout-column primary-column" aria-label="User and Restaurant Performance">
+                    <div class="chart-card flex-grow-1">
+                        <header class="chart-header">
+                            <h3 class="chart-title">Total Revenue by User</h3>
+                        </header>
+                        <div class="chart-body">
+                            <canvas id="userRevenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card flex-grow-1">
+                        <header class="chart-header">
+                            <h3 class="chart-title">Total Items by Restaurant</h3>
+                        </header>
+                        <div class="chart-body">
+                            <canvas id="restaurantChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Secondary Analytical Workspace -->
+                <section class="layout-column secondary-column" aria-label="Temporal and Product Insights">
+                    <div class="chart-card flex-grow-1">
+                        <header class="chart-header">
+                            <h3 class="chart-title">Total Revenue by Date</h3>
+                        </header>
+                        <div class="chart-body">
+                            <canvas id="dateChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card flex-grow-1">
+                        <header class="chart-header">
+                            <h3 class="chart-title">Total Revenue by Payment Method</h3>
+                        </header>
+                        <div class="chart-body">
+                            <canvas id="paymentChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card flex-grow-1">
+                        <header class="chart-header">
+                            <h3 class="chart-title">Total Items by Item Name</h3>
+                        </header>
+                        <div class="chart-body">
+                            <canvas id="itemChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Application Controller Logic -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

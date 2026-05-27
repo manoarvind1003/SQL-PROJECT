@@ -1,0 +1,392 @@
+/* ==========================================================================
+   1. CORE STYLES & INTERACTIVE VARIABLES
+   ========================================================================== */
+:root {
+    /* Color Palette - Premium Culinary Tech */
+    --bg-primary: #faf8f6;
+    --bg-sidebar: #ffffff;
+    --card-bg: #ffffff;
+    --text-main: #1a1a1a;
+    --text-muted: #64748b;
+    
+    /* Brand Accent System */
+    --primary-orange: #ff5200;
+    --primary-orange-rgb: 255, 82, 0;
+    --accent-peach: #ffefe5;
+    --border-color: #f1e9e3;
+    --border-hover: #e2d5cc;
+
+    /* Shadows & Depths */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    
+    /* Typography & Speed */
+    --font-stack: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-stack);
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden;
+    letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   2. FIXED SCREEN VIEWPORT LAYOUT
+   ========================================================================== */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 260px 1fr; /* Widened slightly for professional breathing room */
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--bg-primary);
+}
+
+/* ==========================================================================
+   3. SIDEBAR STYLES (Premium Streamlined Execution)
+   ========================================================================== */
+.sidebar {
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+}
+
+.sidebar-top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.brand-identity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 6px;
+}
+
+.brand-icon {
+    color: var(--primary-orange);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.brand-name {
+    color: var(--text-main);
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+/* Modern Minimalist Search Input */
+.search-bar-wrapper {
+    background-color: #f7f4f1;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s var(--transition-smooth);
+}
+
+.search-bar-wrapper:focus-within {
+    background-color: var(--card-bg);
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 3px rgba(var(--primary-orange-rgb), 0.15);
+}
+
+.search-icon {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* Restructured Sidebar Components */
+.delivery-mascot {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+    background: linear-gradient(145deg, #fffcf9, #f7f3ee);
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+}
+
+.delivery-mascot img {
+    height: 70px;
+    width: auto;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+}
+
+.food-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.food-thumb {
+    width: 100%;
+    height: 70px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s var(--transition-smooth);
+}
+
+.food-thumb:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-hover);
+}
+
+.food-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: scale 0.3s var(--transition-smooth);
+}
+
+.food-thumb:hover img {
+    scale: 1.05;
+}
+
+/* Refined Dock Navigation */
+.sidebar-footer-nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f7f4f1;
+    padding: 6px;
+    border-radius: 12px;
+    gap: 4px;
+}
+
+.nav-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.nav-btn:hover {
+    background-color: rgba(var(--primary-orange-rgb), 0.06);
+}
+
+.nav-btn:hover .nav-icon {
+    color: var(--primary-orange);
+}
+
+.nav-btn.active {
+    background-color: var(--card-bg);
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-btn.active .nav-icon {
+    color: var(--primary-orange);
+}
+
+/* ==========================================================================
+   4. SCROLL-FREE MAIN CONTENT AREA
+   ========================================================================== */
+.main-content {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Modernized Top Header Bar */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+
+.page-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.03em;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 4px;
+    background-color: #f1ede9;
+    padding: 4px;
+    border-radius: 12px;
+}
+
+.filter-btn {
+    background: none;
+    border: none;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s var(--transition-smooth);
+}
+
+.filter-btn:hover {
+    color: var(--text-main);
+}
+
+.filter-btn.active {
+    background-color: var(--card-bg);
+    color: var(--primary-orange);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Micro KPI Cards Layer */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    height: 85px; 
+}
+
+.metric-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Left alignment looks more executive */
+    padding: 0 20px;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.metric-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+
+.metric-card.highlight {
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--accent-peach) 100%);
+    border-color: rgba(var(--primary-orange-rgb), 0.2);
+}
+
+.metric-card.highlight .metric-value {
+    color: var(--primary-orange);
+}
+
+/* ==========================================================================
+   5. DYNAMIC RATIO ANALYTICS CANVAS GRID
+   ========================================================================== */
+.analytics-layout-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 20px;
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.layout-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 0;
+}
+
+/* Reusable Dynamic Scaling Chart Frame */
+.chart-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; 
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s ease;
+}
+
+.chart-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.flex-grow-1 {
+    flex: 1;
+}
+
+.chart-header {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chart-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-main);
+}
+
+/* Vital Container: Holds ChartJS object firmly within the canvas layout box */
+.chart-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+}
+
+.chart-body canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}

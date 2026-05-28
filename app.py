@@ -1,20 +1,18 @@
 
 from flask import Flask, render_template, request, redirect, session, jsonify
-import mysql.connector
-
-app = Flask(__name__)
-
-app.secret_key = 'secret123'
-
-
+import psycopg2
 import os
 
+app = Flask(__name__)
+app.secret_key = 'secret123'
+
 def create_connection():
-    return mysql.connector.connect(
+    return psycopg2.connect(
         host=os.environ.get('DB_HOST', 'localhost'),
         user=os.environ.get('DB_USER', 'root'),
         password=os.environ.get('DB_PASSWORD', 'root'),
-        database=os.environ.get('DB_NAME', 'swiggy')
+        dbname=os.environ.get('DB_NAME', 'swiggy'),
+        port=os.environ.get('DB_PORT', '5432')
     )
 
 
@@ -149,6 +147,7 @@ def place_order():
         INSERT INTO orders
         (user_id, total_amount, payment_method, payment_status, delivery_address)
         VALUES (%s, %s, %s, %s, %s)
+        RETURNING order_id
         '''
 
         cursor.execute(
@@ -162,7 +161,7 @@ def place_order():
             )
         )
 
-        order_id = cursor.lastrowid
+        order_id = cursor.fetchone()[0]
 
         for item in cart:
 
@@ -281,10 +280,10 @@ GROUP BY payment_method;
         {
             "title": "4. Total Revenue by Date",
             "sql": """
-SELECT DATE(order_date) AS order_day,
+SELECT CAST(order_date AS DATE) AS order_day,
        SUM(total_amount) AS total_revenue
 FROM orders
-GROUP BY DATE(order_date)
+GROUP BY CAST(order_date AS DATE)
 ORDER BY order_day;
 """
         },

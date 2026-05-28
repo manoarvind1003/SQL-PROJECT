@@ -1,28 +1,24 @@
-CREATE DATABASE swiggy;
-
-USE swiggy;
-
 CREATE TABLE users (
-    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id SERIAL PRIMARY KEY,
     user_name VARCHAR(100),
     email VARCHAR(100),
     password VARCHAR(100)
 );
 
 CREATE TABLE categories (
-    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    category_id SERIAL PRIMARY KEY,
     category_name VARCHAR(100)
 );
 
 CREATE TABLE restaurants (
-    restaurant_id INT PRIMARY KEY AUTO_INCREMENT,
+    restaurant_id SERIAL PRIMARY KEY,
     restaurant_name VARCHAR(100),
     location VARCHAR(100),
     rating DECIMAL(2,1)
 );
 
 CREATE TABLE items (
-    item_id INT PRIMARY KEY AUTO_INCREMENT,
+    item_id SERIAL PRIMARY KEY,
     item_name VARCHAR(100),
     price INT,
     category_id INT,
@@ -36,7 +32,7 @@ CREATE TABLE items (
 );
 
 CREATE TABLE orders (
-    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id SERIAL PRIMARY KEY,
     user_id INT,
     restaurant_id INT,
     total_amount INT,
@@ -54,7 +50,7 @@ CREATE TABLE orders (
 );
 
 CREATE TABLE order_items (
-    order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_item_id SERIAL PRIMARY KEY,
     order_id INT,
     item_id INT,
     quantity INT,

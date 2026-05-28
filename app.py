@@ -7,12 +7,14 @@ app = Flask(__name__)
 app.secret_key = 'secret123'
 
 
+import os
+
 def create_connection():
     return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='root',
-        database='swiggy'
+        host=os.environ.get('DB_HOST', 'localhost'),
+        user=os.environ.get('DB_USER', 'root'),
+        password=os.environ.get('DB_PASSWORD', 'root'),
+        database=os.environ.get('DB_NAME', 'swiggy')
     )
 
 
